@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>PageTitle</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/css/file-man.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="mt-5">Basic Template </h1>
+        <p class="lead">Simple template to start your design with</p>
+        <ul>
+            <li><a href="img/40-passi-02.jpg" data-fmviewer="gal">Foto 1</a></li>
+            <li><a href="img/40-passi-01.jpg" data-fmviewer="gal">Foto 2</a></li>
+            <li><a href="img/AlessandroScillitani.jpg" data-fmviewer="gal">Foto 3</a></li>
+            <li><a href="img/foto_di-nuzzo-fs8.png" data-fmviewer="gal">Foto 4</a></li>
+        </ul>
+    </div>
+
+    <div class="fm-viewer off-screen" id="theViewer">
+
+        <nav class="navbar fm-navbar bg-transparent position-absolute d-flex align-items-center border-0 pl-4 px top-0"
+            role="navigation">
+            <!-- Sidebar toggle button-->
+            <span class="align-self-start h3 text-white my-auto viewer-title"></span>
+            <div class="navbar-right d-flex justify-content-end ml-auto mr-0 ">
+
+                <ul class="nav navbar-nav d-flex align-items-center mr-1">
+
+                    <li class="">
+                        <button type="button" data-action="download-file" title="Scarica"
+                            class="btn btn-icon btn-lg btn-dark px-3 rounded-0">
+                            <i class="fa fa-fw  fa-download "></i>
+                        </button>
+                    </li>
+                    <li class="">
+                        <button type="button" data-action="previous" title="Precedente" class="btn btn-icon btn-lg btn-dark px-3 rounded-0">
+                            <i class="fa fa-fw  fa-chevron-left "></i>
+                        </button>
+                    </li>
+                    <li class="">
+                        <button type="button" data-action="next" title="Successivo" class="btn btn-icon btn-lg btn-dark px-3 rounded-0">
+                            <i class="fa  fa-fw fa-chevron-right"></i>
+                        </button>
+                    </li>
+                    <li class="">
+                        <button type="button" data-action="toggle-fullscreen" title="Fullscreen on/off"
+                            class="btn btn-icon btn-lg btn-dark px-3 rounded-0  ml-1">
+                            <i class="fa fa-fw  fa-arrows-alt"></i>
+                        </button>
+                    </li>
+                    <li class="">
+                        <button type="button" data-action="close-viewer" title="Chiudi"
+                            class="btn btn-icon btn-lg btn-dark px-3 rounded-0  ml-1">
+                            <i class="fa fa-fw  fa-times"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous">
+    </script>
+    <script src="FM_Viewer.js"></script>
+    <script>
+        (function(win){
+            win.TheViewer = new FM_Viewer('#theViewer');
+        })(window);
+    </script>
+</body>
+
+</html>
