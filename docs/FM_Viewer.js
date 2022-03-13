@@ -84,7 +84,7 @@
 })(window);
 
 class MB_File {
-    constructor(url) {
+    constructor(url,type) {
         this.Url = url;
         this.Name = this.Url.substr(this.Url.lastIndexOf('/') + 1);
         let extpos = this.Url.lastIndexOf('.');
@@ -92,21 +92,37 @@ class MB_File {
         if (extpos > -1) {
             ext = this.Url.substr(extpos);
         }
-        this.ext = ext;
+        this.extension = ext;
         this.directory = this.Url.substr(0, this.Url.lastIndexOf('/'));
+
+        if (type)
+            this.Type = type;
+        else {
+            for (const prop in this.filetypes) {
+                if(this.filetypes[prop].indexOf(this.extension) > -1)
+                    this.Type = prop;
+            }
+        }
     }
     Name = "";
     Url = "";
     ext = "";
+    filetypes = {
+        "image": ('.jpg,.jpeg,.svg,.gif,.png').split(','),
+        "video": ('.mov,.mpeg,.mp4').split(','),
+        "audio": ('.mp3,.wav').split(','),
+        "iframe": ['.pdf']
+    }
+    Type = 'other';
     get Type() {
-        let extpos = this.Url.lastIndexOf('.');
-        let ext = '';
-        if (extpos > -1) {
-            ext = this.Url.substr(extpos);
-        }
+        // let extpos = this.Url.lastIndexOf('.');
+        // let ext = '';
+        // if (extpos > -1) {
+        //     ext = this.Url.substr(extpos);
+        // }
         const images = ('.jpg,.jpeg,.svg,.gif,.png').split(',');
         const otherHandled = ('.mov,.mpeg,.mp3,.mp4,.wav,.pdf').split(',');
-        if (images.indexOf(ext) > -1)
+        if (images.indexOf(this.ext) > -1)
             return 'ImageHandled';
         else if (otherHandled.indexOf(ext) > -1)
             return 'Pdf';
@@ -196,7 +212,8 @@ class FM_Viewer {
                 const galElements = document.querySelectorAll(`[data-fmviewer="${gal}"]`);
                 var i = 0;
                 galElements.forEach(item => {
-                    galItems.push(new MB_File(item.href));
+                    let type = item.getAttribute('data-type');
+                    galItems.push(new MB_File(item.href, type));
                     if(this.href == item.href)
                         i = galItems.length -1;
                 }); 
@@ -297,21 +314,32 @@ class FM_Viewer {
     showCurrentFile(fade) {
         let myFile = this.files[this.currentFile];
         const myFade = fade || 'fade-in';
-        return new Promise(resolve => {
-            if (myFile.Type == 'ImageHandled' || myFile.Type == 'Png' || myFile.Type == 'Gif' || myFile.Type == 'Svg')
-                this.showCurrentImage(myFade).then(result => {
-                    resolve(result);
-                });
-            else if (myFile.Type == 'Pdf' || myFile.Type == 'Video' || myFile.Type == 'Audio')
-                this.showIframe(myFade).then(result => {
-                    resolve(result);
-                })
-            else
-                this.showUnHandledFile(myFade).then(result => {
-                    resolve(result);
-                })
+        return new Promise((resolve, reject) => {
+            switch (myFile.Type) {
+                case 'image':
+                    this.showCurrentImage(myFade).then(result => {
+                        resolve(result);
+                    }).catch(error => reject(error));                    
+                    break;
+                case 'video':
+                    this.showVideo(myFade).then(result => {
+                        resolve(result);
+                    }).catch(error => reject(error));                    
+                    break;
+                case 'audio':
+                    break;
+                case 'iframe':
+                    this.showIframe(myFade).then(result => {
+                        resolve(result);
+                    }).catch(error => reject(error));  
+                    break           
+                default:
+                    this.showUnHandledFile(myFade).then(result =>{
+                        resolve(result);
+                    }).catch(error => reject(error));
+                    break;
+            }
         })
-
     }
 
     showCurrentImage(fade) {
@@ -356,6 +384,27 @@ class FM_Viewer {
         })
     }
 
+    showVideo(fade) {
+        const myFade = fade || 'fade-in';
+        const self = this;
+        //$(self.element).spin();
+        let myFile = this.files[this.currentFile];
+        return new Promise(resolve => {
+            let video = document.createElement('video');
+            video.classList.add('viewer-content');
+            video.classList.add(myFade);
+            video.src = myFile.Url;
+            video.setAttribute('controls', 'true');
+            video.setAttribute('autoplay', 'true');
+            self.element.appendChild(video);
+            //$(self.element).spin(false);
+            setTimeout(() => {
+                video.classList.remove(myFade);
+                resolve(true);
+            }, 300);
+        })
+    }
+
     showUnHandledFile(fade) {
         const myFade = fade || 'fade-in';
         const self = this;
@@ -367,9 +416,9 @@ class FM_Viewer {
             div.classList.add('text-white');
             div.classList.add('text-center');
             div.classList.add(myFade);
-            div.innerHTML = `<h3>Anteprima non disponibile</h3> 
-                                         <p>Viewer non è in grado di visualizzare il file</p>
-                                         <div><a href="${myFile.Url}" class="btn btn-warning" download="${myFile.Nù}">Scarica "${myFile.Name}"</button></div>`;
+            div.innerHTML = `   <h3>Anteprima non disponibile</h3> 
+                                <p>Viewer non è in grado di visualizzare il file</p>
+                                <div><a href="${myFile.Url}" class="btn btn-warning">Scarica "${myFile.Name}"</button></div>`;
             self.element.appendChild(div);
             //$(self.element).spin(false);
             setTimeout(() => {
