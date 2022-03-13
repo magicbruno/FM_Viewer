@@ -94,7 +94,9 @@ class MB_File {
         }
         this.extension = ext;
         this.directory = this.Url.substr(0, this.Url.lastIndexOf('/'));
-
+        if(this.supportPdf())
+            this.filetypes.iframe = ['.pdf'];
+            
         if (type)
             this.Type = type;
         else {
@@ -110,26 +112,25 @@ class MB_File {
     filetypes = {
         "image": ('.jpg,.jpeg,.svg,.gif,.png').split(','),
         "video": ('.mov,.mpeg,.mp4').split(','),
-        "audio": ('.mp3,.wav').split(','),
-        "iframe": ['.pdf']
+        "audio": ('.mp3,.wav').split(',')
+        //,"iframe": ['.pdf']
     }
     Type = 'other';
-    get Type() {
-        // let extpos = this.Url.lastIndexOf('.');
-        // let ext = '';
-        // if (extpos > -1) {
-        //     ext = this.Url.substr(extpos);
-        // }
-        const images = ('.jpg,.jpeg,.svg,.gif,.png').split(',');
-        const otherHandled = ('.mov,.mpeg,.mp3,.mp4,.wav,.pdf').split(',');
-        if (images.indexOf(this.ext) > -1)
-            return 'ImageHandled';
-        else if (otherHandled.indexOf(ext) > -1)
-            return 'Pdf';
-        else
-            return 'Other';
-    };
-
+    supportPdf() {
+        function hasAcrobatInstalled() {
+            function getActiveXObject(name) {
+              try { return new ActiveXObject(name); } catch(e) {}
+            }
+        
+            return getActiveXObject('AcroPDF.PDF') || getActiveXObject('PDF.PdfCtrl')
+          }
+        
+          function isIos() {
+            return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
+          }
+         
+          return navigator.mimeTypes['application/pdf'] || hasAcrobatInstalled() || isIos();
+    }
 }
 
 class FM_Viewer {
