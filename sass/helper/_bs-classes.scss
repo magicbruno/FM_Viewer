@@ -18,26 +18,24 @@
         border-radius: 0.25rem;
         transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
             border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    }
 
-    @media (prefers-reduced-motion: reduce) {
-        .btn {
+
+        @media (prefers-reduced-motion: reduce) {
             transition: none;
+        }
+
+        &:hover {
+            color: #212529;
+        }
+
+        &:focus {
+            outline: 0;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
         }
     }
 
-    .btn:hover {
-        color: #212529;
-    }
-
-    .btn:focus {
-        outline: 0;
-        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
-    }
-
     .btn:disabled,
-    .btn.disabled,
-    fieldset:disabled .btn {
+    .btn.disabled {
         pointer-events: none;
         opacity: 0.65;
     }
@@ -52,12 +50,13 @@
         &:hover {
             background: #444;
         }
+    }
 
-        .btn-warning {
-            color: #000;
-            background-color: #ffc107;
-            border-color: #ffc107;
-        }
+    .btn-warning {
+        color: #000;
+        background-color: #ffc107;
+        border-color: #ffc107;
+
 
         &:hover {
             color: #000;

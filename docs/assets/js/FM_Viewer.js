@@ -454,7 +454,7 @@ class FM_Viewer {
             div.classList.add(myFade);
             div.innerHTML = `   <h3>Anteprima non disponibile</h3> 
                                 <p>Viewer non è in grado di visualizzare il file</p>
-                                <div><a href="${myFile.Url}" class="btn btn-warning">Scarica "${myFile.Name}"</button></div>`;
+                                <div><a href="${myFile.Url}" download="${myFile.Name}" class="btn btn-warning">Scarica "${myFile.Name}"</button></div>`;
             self.element.appendChild(div);
             self.element.classList.remove('loading');
             setTimeout(() => {
