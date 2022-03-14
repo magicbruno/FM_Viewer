@@ -16,7 +16,7 @@ const distributionJs = 'dist/js/';
 function sass() {
   return src(sassSrc)
     .pipe(autoprefixer())
-    .pipe(gulpsass())
+    .pipe(gulpsass().on('error', (err) => console.log(err)))
     .pipe(dest(sassDest));
 }
 
