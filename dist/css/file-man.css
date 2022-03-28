@@ -3,17 +3,6 @@
     transform: rotate(360deg);
   }
 }
-.fm-viewer .fm-navbar.navbar {
-  left: 0;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-}
-.fm-viewer .fm-navbar.navbar .navbar-nav {
-  display: flex;
-  flex-flow: row nowrap;
-}
-
 .fm-viewer {
   background-color: black;
   position: fixed;
@@ -149,4 +138,49 @@
 }
 .fm-viewer .text-center {
   text-align: center !important;
+}
+.fm-viewer .d-none {
+  display: none !important;
+}
+
+.fm-viewer .fm-navbar.navbar, .fm-viewer .fm-navbar {
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  position: absolute;
+  justify-content: space-between;
+  align-items: center;
+}
+.fm-viewer .fm-navbar.navbar .viewer-title, .fm-viewer .fm-navbar .viewer-title {
+  margin: 0;
+  padding: 0 0.75rem;
+  color: white;
+}
+.fm-viewer .fm-navbar.navbar .navbar-nav, .fm-viewer .fm-navbar .navbar-nav {
+  display: flex;
+  flex-flow: row nowrap;
+}
+.fm-viewer .fm-navbar {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+.fm-viewer .fm-navbar .fm-navbar-nav {
+  list-style: none;
+  display: flex;
+  flex-flow: row nowrap;
+  padding: 0;
+  margin: 0;
+}
+.fm-viewer .fm-navbar .fm-navbar-nav svg {
+  display: block;
+  height: 1.2rem;
+}
+.fm-viewer .fm-navbar .fm-navbar-nav .btn {
+  padding: 0.75rem;
+  border-radius: 0;
+  margin: 0 0.25rem;
 }

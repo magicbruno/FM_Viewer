@@ -3,5 +3,6 @@
     "cSpell.enableFiletypes": [
         "!css",
         "!javascript"
-    ]
+    ],
+    "svg.preview.background": "dark-transparent"
 }
