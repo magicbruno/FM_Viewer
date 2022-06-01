@@ -4,5 +4,8 @@
         "!css",
         "!javascript"
     ],
-    "svg.preview.background": "dark-transparent"
+    "svg.preview.background": "dark-transparent",
+    "cSpell.words": [
+        "Migliaretti"
+    ]
 }

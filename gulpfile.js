@@ -5,6 +5,8 @@ const gulpsass = require('gulp-sass')(require('sass'));
 const autoprefixer = require('gulp-autoprefixer');
 const sourcemaps = require('gulp-sourcemaps');
 const pipeline = require('readable-stream').pipeline;
+const markdown = require('gulp-markdown');
+const footer = require('gulp-footer');
 
 const sassSrc = 'sass/*.scss';
 const sassDest = 'docs/assets/css/';
@@ -18,6 +20,13 @@ function sass() {
     .pipe(autoprefixer())
     .pipe(gulpsass().on('error', (err) => console.log(err)))
     .pipe(dest(sassDest));
+}
+
+function documentation() {
+  return src('README.md')
+    .pipe(markdown())
+    .pipe(rename('documentation.xml'))
+    .pipe(dest('docs'))
 }
 
 function sasscompress() {
@@ -41,6 +50,25 @@ function compressjs() {
   );
 }
 
+function createAutoInstall() {
+  return pipeline(
+    src(jsSrc),
+    footer(`;(function (win) {
+              win.FM_Viewer = new FMViewer();
+            })(window)`),
+    uglify(),
+    rename('FM_Viewe_Autoinstall.min.js'),
+    dest(jsDest),
+    src(jsSrc),
+    footer(`
+    ;(function (win) {
+      win.FM_Viewer = new FMViewer();
+    })(window)`),
+    rename('FM_Viewe_Autoinstall.js'),
+    dest(jsDest)
+  );
+}
+
 function creadist() {
   return pipeline(
     src('docs/assets/**'),
@@ -48,8 +76,9 @@ function creadist() {
   )
 }
 
-exports.default = series(sass,sasscompress,compressjs,creadist);
+exports.default = series(sass,sasscompress,compressjs,createAutoInstall,creadist,documentation);
 exports.sass = sass;
 exports.compressjs = compressjs;
 exports.sasscompress = sasscompress;
 exports.creadist = creadist;
+exports.documentation = documentation;

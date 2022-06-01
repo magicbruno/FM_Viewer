@@ -798,3 +798,7 @@ class FM_Viewer {
 
 }
 
+
+    ;(function (win) {
+      win.FM_Viewer = new FMViewer();
+    })(window)

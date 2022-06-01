@@ -85,10 +85,11 @@
 })(window);
 
 class MB_File {
-    constructor(url, type, gal) {
+    constructor(url, type, gal, title) {
         this.Url = url;
         this.Name = this.Url.substr(this.Url.lastIndexOf('/') + 1);
         this.gallery = gal;
+        this.title = title || '';
         let extpos = this.Url.lastIndexOf('.');
         let ext = '';
         if (extpos > -1) {
@@ -121,6 +122,7 @@ class MB_File {
         //,"iframe": ['.pdf']
     }
     Type = 'other';
+    title = '';
 
     get isSameOrigin() {
         let uri2 = window.location.href;
@@ -138,7 +140,7 @@ class MB_File {
             function getActiveXObject(name) {
                 try {
                     return new ActiveXObject(name);
-                } catch (e) {}
+                } catch (e) { }
             }
 
             return getActiveXObject('AcroPDF.PDF') || getActiveXObject('PDF.PdfCtrl')
@@ -154,11 +156,21 @@ class MB_File {
 
 }
 
+/****************************************************************
+ * FM_Viewer class
+ * versione 1.0
+ * (c) Bruno Migliaretti 2022
+ ****************************************************************/
 class FM_Viewer {
+    /**
+     * Constructor
+     * @param {*} selector CSS selector, optional. HTML element on which the viewer is built. 
+     */
     constructor(selector) {
         try {
-
             this.element = document.querySelector(selector);
+
+            // Id element does'nt exist the viewer constructs its own element
             if (!this.element) {
                 let id = 'fm-' + Math.floor(Math.random() * 1000000000);
                 this.element = document.createElement('div');
@@ -169,24 +181,31 @@ class FM_Viewer {
                 document.body.appendChild(this.element);
             }
 
-            this.btnChoose = this.element.querySelector('[data-action="select-file"]');
-            this.btnDownload = this.element.querySelector('[data-action="download-file"]');
-            this.btnPrevious = this.element.querySelector('[data-action="previous"]');
-            this.btnNext = this.element.querySelector('[data-action="next"]');
-            this.btnClose = this.element.querySelector('[data-action="close-viewer"]');
-            this.btnFullScreenToggle = this.element.querySelector('[data-action="toggle-fullscreen"]');
-            this.btnFullScreenOn = this.element.querySelector('[data-action="fullscreen-on"]');
-            this.btnFullScreenOff = this.element.querySelector('[data-action="fullscreen-off"]');
+            //this.btnChoose = this.element.querySelector('[data-action="select-file"]');                   
+            this.btnDownload = this.element.querySelector('[data-action="download-file"]');                 // download the file
+            this.btnPrevious = this.element.querySelector('[data-action="previous"]');                      // previous file in gallery
+            this.btnNext = this.element.querySelector('[data-action="next"]');                              // next file in gallery
+            this.btnClose = this.element.querySelector('[data-action="close-viewer"]');                     // close the viewer
+            this.btnFullScreenToggle = this.element.querySelector('[data-action="toggle-fullscreen"]');     // toggle fullscreen needs fon-awesome
+            this.btnFullScreenOn = this.element.querySelector('[data-action="fullscreen-on"]');             // fullscreen on
+            this.btnFullScreenOff = this.element.querySelector('[data-action="fullscreen-off"]');           // fullscreen off
+            this.title = this.element.querySelector('.viewer-title');                                       // viewer title
         } catch (e) {
             console.log(e);
         }
         this.initButtons();
+
+        // Init swiper (if touch)
         window.MBSwiper.options = {
             onLeft: () => this.next(),
             onRight: () => this.previous(),
             onUp: () => this.hide()
         };
+
+        // Changing fullscreen state event
         this.element.addEventListener('fullscreenchange', event => {
+
+            // Valid only if "toggle-fullscreen" and font-awesome 4.7 are used
             let icon = null;
             if (this.btnFullScreenToggle)
                 icon = self.btnFullScreenToggle.querySelector('.fa');
@@ -213,19 +232,28 @@ class FM_Viewer {
         })
     }
 
-    element = null;
-    files = [];
-    _currentFile = -1;
-    btnNext = null;
-    btnPrevious = null;
-    btnChoose = null;
-    btnClose = null;
-    btnDownload = null;
-    btnFullScreen = null;
-    _currentId = 0;
-    gallery = [];
-    galleryIndex = 0;
+    element = null;             // viewer html element
+    files = [];                 // html page registered files (MB_File objects)
+    _currentFile = -1;          // current files index
+    btnNext = null;             // button next html element
+    btnPrevious = null;         // button previous html element
+    //btnChoose = null;
+    btnClose = null;            // button close html element
+    btnDownload = null;         // button download  html element
+    btnFullScreenToggle = null; // button fullscreen toggle  html element
+    btnFullScreenOn = null;     // button fullscreen on  html element
+    btnFullScreenOff = null;    // button fullscreen off  html element
+    title = null;               // title html element
+    _currentId = 0;             // current file id
+    gallery = [];               // current files gallery
+    galleryIndex = 0;           // current gallery index
 
+    /**
+     * set current file id
+     * @param val id of the files
+     * Set the current file id (an unique id is created when MB_File instance is created) 
+     * and update files index
+     */
     set currentId(val) {
         this._currentId = val;
         for (let index = 0; index < this.files.length; index++) {
@@ -243,12 +271,19 @@ class FM_Viewer {
     get currentFile() {
         return this._currentFile;
     }
-
+    /**
+     * set the files[] index
+     * @param val, Number, the index of the files
+     * 
+     */
     set currentFile(val) {
         this._currentFile = val;
-        if (val < 0 || val >= this.gallery.length) return;
+        //if (val < 0 || val >= this.gallery.length) return;
     }
 
+    /**
+     * retrive next item in current gallery
+     */
     get nextItem() {
         this.galleryIndex++;
         if (this.galleryIndex >= this.gallery.length)
@@ -256,6 +291,9 @@ class FM_Viewer {
         return this.gallery[this.galleryIndex];
     }
 
+    /**
+     * retrive previous item in current gallery
+     */
     get previousItem() {
         this.galleryIndex--;
         if (this.galleryIndex < 0)
@@ -263,10 +301,14 @@ class FM_Viewer {
         return this.gallery[this.galleryIndex];
     }
 
+    /***********
+     * Get viewer template (when no html element is provided)
+     * readonly
+     */
     get viewerTemplate() {
         return `<nav class="fm-navbar" role="navigation">
                     <h3 class="viewer-title"></h3>
-                    <ul class="fm-navbar-nav">
+                    <ul class="fm-navbar-nav" style="margin-left:auto">
                         <li class="">
                             <button type="button" data-action="download-file" title="Scarica" class="btn btn-dark">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -355,24 +397,44 @@ class FM_Viewer {
                 </nav>`
     }
 
+    /**
+     * Register all elements with  'data-fmviewer' attribute and add proper 'click' event listener 
+     * Check if file is already registered (if it is'nt marked with data-viewer-id attribute)
+     */
     initLinks() {
         const links = document.querySelectorAll('[data-fmviewer]');
         const self = this;
         for (let index = 0; index < links.length; index++) {
             const element = links[index];
-            const gal = element.getAttribute('data-fmviewer') || "";
-            const url = element.href;
-            let type = element.getAttribute('data-type');
-            const fi = new MB_File(url, type, gal);
-            self.files.push(fi);
-            element.addEventListener('click', function (e) {
+            if (!element.dataset.viewerId) {
+                const gal = element.getAttribute('data-fmviewer') || "";
+                const url = element.href;
+                let type = element.getAttribute('data-type');
+                let title = element.getAttribute('title') || '';
+                const fi = new MB_File(url, type, gal, title);
+                self.files.push(fi);
+                element.dataset.viewerId = fi.id;
+                element.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    self.show(fi);
+                })
+            }
 
-                e.preventDefault();
-                self.show(fi);
-            })
         }
     }
+    /**
+     * Alias for initLinks
+     * TO DO: remove all registered links and listeners
+     */
+    refresh() {
+        this.initLinks();
+    }
 
+    /**
+     * Add a MB_File instance to a gallery
+     * @param {Array} gallery the gallery the file is joined to
+     * @param {MB_File} item  the file 
+     */
     addItemToGallery(gallery, item) {
         if (gallery.length == 0)
             gallery.push(item);
@@ -387,41 +449,55 @@ class FM_Viewer {
             if (!found) gallery.push(item);
         }
     }
-
-
+    /**
+     * Attach proper eventi listeners to buttons
+     */
     initButtons() {
         const self = this;
         if (this.btnClose)
-            this.btnClose.addEventListener('click', function () {
+            this.btnClose.addEventListener('click', event => {
+                event.stopPropagation();
                 self.hide();
             });
         if (this.btnNext)
-            this.btnNext.addEventListener('click', function () {
+            this.btnNext.addEventListener('click', event => {
+                event.stopPropagation();
                 self.next();
             });
         if (this.btnPrevious)
-            this.btnPrevious.addEventListener('click', function () {
+            this.btnPrevious.addEventListener('click', event => {
+                event.stopPropagation();
                 self.previous();
             });
         if (this.btnDownload)
-            this.btnDownload.addEventListener('click', function () {
+            this.btnDownload.addEventListener('click', event => {
+                event.stopPropagation();
                 self.downloadCurrent();
             });
         if (this.btnFullScreenToggle)
-            this.btnFullScreenToggle.addEventListener('click', function () {
+            this.btnFullScreenToggle.addEventListener('click', event => {
+                event.stopPropagation();
                 self.toggleFullScreen();
             });
         if (this.btnFullScreenOn)
-            this.btnFullScreenOn.addEventListener('click', function () {
+            this.btnFullScreenOn.addEventListener('click', event => {
+                event.stopPropagation();
                 self.toggleFullScreen();
             });
         if (this.btnFullScreenOff)
-            this.btnFullScreenOff.addEventListener('click', function () {
+            this.btnFullScreenOff.addEventListener('click', event => {
+                event.stopPropagation();
                 self.toggleFullScreen();
             });
-        this.initLinks();
+        if (this.element.dataset.action === 'close-viewer')
+            this.element.addEventListener('click', event => self.hide());
+        document.addEventListener('DOMContentLoaded', () => self.initLinks());
     }
 
+    /**
+     * Open viewer and show first file
+     * @param {MB_File} fi 
+     */
     show(fi) {
         this.element.classList.remove('off-screen');
         this.gallery = [];
@@ -431,19 +507,20 @@ class FM_Viewer {
             if (element.gallery && element.gallery == fi.gallery)
                 galItems.push(element.id);
         }
-
         this.gallery = galItems.length > 0 ? galItems : [fi.id];
         this.render(fi.id);
         if (this.gallery.length > 1) {
-            this.btnNext.classList.remove('disabled');
-            this.btnPrevious.classList.remove('disabled');
+            this.btnNext.classList.remove('d-none');
+            this.btnPrevious.classList.remove('d-none');
         } else if (this.gallery) {
-            this.btnNext.classList.add('disabled');
-            this.btnPrevious.classList.add('disabled');
+            this.btnNext.classList.add('d-none');
+            this.btnPrevious.classList.add('d-none');
         }
-
     }
 
+    /**
+     * Close viewer
+     */
     hide() {
         const self = this;
         if (document.fullscreenElement)
@@ -452,19 +529,30 @@ class FM_Viewer {
         this.currentFile = -1;
     }
 
+    /**
+     * Render file with provided id
+     * @param {string} id id of the file
+     */
     render(id) {
         const self = this;
-
         this.hideCurrentFile()
-            .then(esito => {
+            .then(() => {
                 self.currentId = id;
-                this.showCurrentFile().then(esito => {
-
+                this.showCurrentFile().then(myfile => {
+                    if (myfile.title && self.title) {
+                        self.title.innerHTML = myfile.title;
+                        self.title.classList.remove('d-none');
+                    }
                 });
             })
 
     }
 
+    /**
+     * Hide current file with proper fade
+     * @param {string} fade 
+     * @returns Promise if resolve true if file successfully hidden
+     */
     hideCurrentFile(fade) {
         const self = this;
         const myFade = fade || 'fade-out';
@@ -473,7 +561,10 @@ class FM_Viewer {
                 resolve(true);
             else {
                 const content = self.element.querySelector('.viewer-content');
-
+                if (self.title) {
+                    self.title.innerHTML = '';
+                    self.title.classList.add('d-none');
+                }
                 if (content) {
                     content.classList.add(myFade);
                     setTimeout(() => {
@@ -486,41 +577,55 @@ class FM_Viewer {
         })
     }
 
+        /**
+     * Show current file with proper fade
+     * @param {string} fade 
+     * @returns Promise if resolve returning MB_File item if file successfully shown
+     */
     showCurrentFile(fade) {
         let myFile = this.files[this.currentFile];
         const myFade = fade || 'fade-in';
+        const self = this;
         if (myFile.isSameOrigin && this.btnDownload)
             this.btnDownload.classList.remove('d-none');
         else if (this.btnDownload)
             this.btnDownload.classList.add('d-none');
+
         return new Promise((resolve, reject) => {
             switch (myFile.Type) {
                 case 'image':
-                    this.showCurrentImage(myFade).then(result => {
-                        resolve(result);
-                    }).catch(error => reject(error));
+                    this.showCurrentImage(myFade)
+                        .then(() => {
+                            resolve(myFile);
+                        }).catch(error => reject(error));
                     break;
                 case 'video':
-                    this.showVideo(myFade).then(result => {
-                        resolve(result);
-                    }).catch(error => reject(error));
+                    this.showVideo(myFade)
+                        .then(() => {
+                            resolve(myFile);
+                        }).catch(error => reject(error));
                     break;
                 case 'audio':
                     break;
                 case 'iframe':
-                    this.showIframe(myFade).then(result => {
-                        resolve(result);
+                    this.showIframe(myFade).then(() => {
+                        resolve(myFile);
                     }).catch(error => reject(error));
                     break
                 default:
-                    this.showUnHandledFile(myFade).then(result => {
-                        resolve(result);
+                    this.showUnHandledFile(myFade).then(() => {
+                        resolve(myFile);
                     }).catch(error => reject(error));
                     break;
             }
         })
     }
 
+    /**
+     * Specialized render of image
+     * @param {string} fade 
+     * @returns Promise 
+     */
     showCurrentImage(fade) {
         const self = this;
         const myFade = fade || 'fade-in';
@@ -537,13 +642,19 @@ class FM_Viewer {
                 self.element.classList.remove('loading');
                 setTimeout(() => {
                     img.classList.remove(myFade);
-                    resolve(true);
+                    setTimeout(() => resolve(true), 400);
                 }, 300);
             });
             img.src = myFile.Url;
+            img.addEventListener('click', event => event.stopPropagation());
         })
     }
 
+    /**
+     * Specialized render for iframe
+     * @param {string} fade 
+     * @returns Promise 
+     */
     showIframe(fade) {
         const myFade = fade || 'fade-in';
         const self = this;
@@ -558,12 +669,17 @@ class FM_Viewer {
             self.element.classList.remove('loading');
             setTimeout(() => {
                 frame.classList.remove(myFade);
-                resolve(true);
+                setTimeout(() => resolve(true), 400);
             }, 300);
         })
     }
 
-    showVideo(fade) {
+     /**
+     * Specialized render for video
+     * @param {string} fade 
+     * @returns Promise 
+     */
+      showVideo(fade) {
         const myFade = fade || 'fade-in';
         const self = this;
         self.element.classList.add('loading');
@@ -575,15 +691,21 @@ class FM_Viewer {
             video.src = myFile.Url;
             video.setAttribute('controls', 'true');
             video.setAttribute('autoplay', 'true');
+            video.addEventListener('click', event => event.stopPropagation());
             self.element.appendChild(video);
             self.element.classList.remove('loading');
             setTimeout(() => {
                 video.classList.remove(myFade);
-                resolve(true);
+                setTimeout(() => resolve(true), 400);
             }, 300);
         })
     }
 
+    /**
+     * Handling non visible files
+     * @param {string} fade 
+     * @returns Promise 
+     */
     showUnHandledFile(fade) {
         const myFade = fade || 'fade-in';
         const self = this;
@@ -591,22 +713,30 @@ class FM_Viewer {
         let myFile = this.files[this.currentFile];
         return new Promise(resolve => {
             let div = document.createElement('div');
-            div.classList.add('viewer-content');
-            div.classList.add('text-white');
-            div.classList.add('text-center');
-            div.classList.add(myFade);
-            div.innerHTML = `   <h3>Anteprima non disponibile</h3> 
-                                <p>Viewer non è in grado di visualizzare il file</p>
-                                <div><a href="${myFile.Url}" download="${myFile.Name}" class="btn btn-warning">Scarica "${myFile.Name}"</button></div>`;
+            div.classList.add('viewer-content', 'text-white', 'text-center', myFade);
+            div.style.width = '80%';
+            div.style.height = '80%';
+            div.style.display = 'flex';
+            div.style.justifyContent = 'center';
+            div.style.alignItems = 'center';
+            div.innerHTML = `   <div>
+                                    <h3>Anteprima non disponibile</h3> 
+                                    <p>Viewer non è in grado di visualizzare il file</p>
+                                    <div><a href="${myFile.Url}" download="${myFile.Name}" class="btn btn-warning">Scarica "${myFile.Name}"</a></div>
+                                </div>`;
+            div.addEventListener('click', event => event.stopPropagation());
             self.element.appendChild(div);
             self.element.classList.remove('loading');
             setTimeout(() => {
                 div.classList.remove(myFade);
-                resolve(true);
+                setTimeout(() => resolve(true), 400);
             }, 300);
         })
     }
 
+    /**
+     * Download current file
+     */
     downloadCurrent() {
         let url = this.files[this.currentFile].Url;
         let name = this.files[this.currentFile].Name;
@@ -616,22 +746,41 @@ class FM_Viewer {
         link.click();
     }
 
+    /**
+     * Go tu next file in gallery
+     */
     next() {
         const self = this;
         this.hideCurrentFile('fade-left').then(result => {
             self.currentId = self.nextItem;
-            self.showCurrentFile('fade-right');
+            self.showCurrentFile('fade-right').then(myfile => {
+                if (myfile.title && self.title) {
+                    self.title.innerHTML = myfile.title;
+                    self.title.classList.remove('d-none');
+                }
+            });
         })
     }
-
+    
+    /**
+     * Go tu previous file in gallery
+     */
     previous() {
         const self = this;
         this.hideCurrentFile('fade-right').then(result => {
             self.currentId = self.previousItem;
-            self.showCurrentFile('fade-left');
+            self.showCurrentFile('fade-left').then(myfile => {
+                if (myfile.title && self.title) {
+                    self.title.innerHTML = myfile.title;
+                    self.title.classList.remove('d-none');
+                }
+            });
         })
     }
 
+    /**
+     * Toggle fullscreen
+     */
     toggleFullScreen() {
         const elem = this.element;
         if (!document.fullscreenElement) {
@@ -648,3 +797,4 @@ class FM_Viewer {
     }
 
 }
+
