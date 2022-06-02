@@ -1,5 +1,8 @@
 # FM Viewer
 Simple javascript file viewer.
+
+[Demo and documentation.](https://magicbruno.github.io/FM_Viewer/)
+
 ## Introduction
 FM Viewer is a simple file and gallery viewer whose UI is modelled on popular FancyBox. 
 

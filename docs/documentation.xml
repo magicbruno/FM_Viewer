@@ -1,5 +1,6 @@
 <h1 id="fm-viewer">FM Viewer</h1>
 <p>Simple javascript file viewer.</p>
+<p><a href="https://magicbruno.github.io/FM_Viewer/">Demo and documentation.</a></p>
 <h2 id="introduction">Introduction</h2>
 <p>FM Viewer is a simple file and gallery viewer whose UI is modelled on popular FancyBox. </p>
 <p>Main features:</p>
@@ -152,7 +153,7 @@
             &lt;/svg&gt;
         &lt;/a&gt;
         &lt;a href=&quot;javascript:;&quot; data-action=&quot;previous&quot;&gt;
-            &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;&lt;svg id=&quot;a&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 180 180&quot;&gt;
+            &lt;svg id=&quot;a&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 180 180&quot;&gt;
                 &lt;defs&gt;
                     &lt;style&gt;
                         .b {
