@@ -22,7 +22,7 @@ Link css stuff in the `head` of your page:
 ```
 <head>
 ...
-    <link rel="stylesheet" href="assets/css/file-man.css">
+    <link rel="stylesheet" href="your-install-folder/dist/css/file-man.css">
 ...
 </head>
 ```
@@ -30,7 +30,7 @@ Link css stuff in the `head` of your page:
 Link script file at the end of body section of the html page.
 
 ```
-<script src="assets/js/FM_Viewer.js"></script>
+<script src="your-install-folder/dist/js/FM_Viewer.js"></script>
 ```
 and then create an instance of the FM_Viewer class to initialize the viewer.
 ```
