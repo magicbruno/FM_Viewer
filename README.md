@@ -15,7 +15,13 @@ Main features:
 - Works in all *modern browsers*
 
 ## Getting started
-[Download](https://github.com/magicbruno/FM_Viewer/archive/refs/heads/main.zip) or clone repository. Distribution files are in the **dist** folder.
+
+Install via npm:
+```
+npm install @magicbruno/fm_viewer@1.0.0
+```
+
+If you prefer yuo can [Download](https://github.com/magicbruno/FM_Viewer/archive/refs/heads/main.zip) or clone repository. Distribution files are in the **dist** folder.
 
 Link css stuff in the `head` of your page:
 
