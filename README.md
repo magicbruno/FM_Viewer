@@ -1,9 +1,9 @@
-# FM Viewer
+# 1. FM Viewer
 Simple javascript file viewer.
 
 [Demo and documentation.](https://magicbruno.github.io/FM_Viewer/)
 
-## Introduction
+## 1.1. Introduction
 FM Viewer is a simple file and gallery viewer whose UI is modelled on popular FancyBox. 
 
 Main features:
@@ -14,14 +14,20 @@ Main features:
 - Written using ES6 classes
 - Works in all *modern browsers*
 
-## Getting started
+## 1.2. Getting started
 
 Install via npm:
 ```
-npm install @magicbruno/fm_viewer@1.0.0
+npm install @magicbruno/fm_viewer
+```
+or link directly from CDN:
+```
+<link rel="stylesheet" href="[your-install-folder/dist/css/file-man.css](https://cdn.jsdelivr.net/npm/@magicbruno/fm_viewer/dist/css/file-man.min.css)">
+
+<script src="[your-install-folder/dist/js/FM_Viewer.js](https://cdn.jsdelivr.net/npm/@magicbruno/fm_viewer/dist/js/FM_Viewer.js)"></script>
 ```
 
-If you prefer yuo can [Download](https://github.com/magicbruno/FM_Viewer/archive/refs/heads/main.zip) or clone repository. Distribution files are in the **dist** folder.
+If you prefer yuo can [Download](https://github.com/magicbruno/FM_Viewer/archive/refs/heads/main.zip) `or` clone repository. Distribution files are in the **dist** folder.
 
 Link css stuff in the `head` of your page:
 
@@ -47,19 +53,26 @@ and then create an instance of the FM_Viewer class to initialize the viewer.
 </script>
 ```
 The `<selector>` parameter is the HTML element on which the viewer is built. 
-## Basic usage
+## 1.3. Basic usage
 If you create the viewer instance with no parameter, FM_Viewer will build its own element on the fly and append it to the `body` of the page.
 
 ```
 const TheViewer = new FM_Viewer();
 ```
-All `<a>` elements with data-fm-viewer attribute are registered by the viewer when the `DOMContentLoaded` event is fired, and then will open its href in the viewer.
+All `<a>` elements with `data-fmviewer` attribute are registered by the viewer when the `DOMContentLoaded` event is fired, and then they will open its href in the viewer.
+
+You can optionally specify the type of the document to show using `data-type` attribute. Valid types are: `image`, `video`, `audio` and `iframe`.
+
+ > #### NOTES
+ >- The viewer try to determine the type of the document linked to by file extension. If the url has no extension you must specify the type using `data-type` attribute.
+ >- Use video type only for link to real video files. Form Vimeo or YouTube video use iframe type instead (see example).
 
 If you add links after, for example via ajax call, you may call the viewer refresh method to update the viewer.
 
 ```
 TheViewer.refresh();
 ```
+
 
 Here is the code appended to the `body`.
 
@@ -138,7 +151,7 @@ Here is the code appended to the `body`.
 ```
 FM_Viewer has no dependance. No jQuery, no Bootstrap and icons are self contained svg graphics. You only need its style sheet.
 
-## Customizing 
+## 1.4. Customizing 
 You can customize your FM_Viewer constructing your interface using HTML and modifying style sheet file.
 
 The example below expose only basic button (close viewer, next and previous) with customized icons and allows viewer closing on clicking on backdrop.

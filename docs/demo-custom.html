@@ -80,6 +80,8 @@
                 <li><a href="img/documentando-archivio.svg" data-fmviewer="gal2">Svg image (gallery 2)</a></li>
                 <li><a href="https://documentando.org" data-fmviewer="gal" data-type="iframe">Forced type (gallery
                         1)</a></li>
+                <li><a href="https://www.youtube.com/embed?v=zzE-kVadtNw" data-fmviewer="gal" data-type="iframe">Forced type (gallery
+                    1)</a></li>
             </ul>
             <p><button type="button" class="btn btn-primary me-2" id="btn-additem">Add item to gallery 1</button></p>
             <p>
@@ -431,7 +433,10 @@
             document.getElementById('btn-additem').addEventListener('click', () => {
                 // Adding an element and registering it to the viewer calling refresh method
                 let li = document.createElement('li');
-                li.innerHTML = `<a href="img/40-passi-01.jpg" title="40 passi" data-fmviewer="gal">Added just now!</a>`;
+                let w = Math.floor(Math.random() * 500 + 1440);
+                let h = Math.floor(Math.random() * 200 + 880);
+                let any = 'animals';
+                li.innerHTML = `<a href="http://placeimg.com/${w}/${h}/${any}" title="Random image from placeimage.com" data-fmviewer="gal" data-type="image">Random image from placeimage.co</a>`;
                 document.getElementById('link-list').appendChild(li);
                 TheViewer.refresh();
             });

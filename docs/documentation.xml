@@ -1,7 +1,7 @@
-<h1 id="fm-viewer">FM Viewer</h1>
+<h1 id="1-fm-viewer">1. FM Viewer</h1>
 <p>Simple javascript file viewer.</p>
 <p><a href="https://magicbruno.github.io/FM_Viewer/">Demo and documentation.</a></p>
-<h2 id="introduction">Introduction</h2>
+<h2 id="11-introduction">1.1. Introduction</h2>
 <p>FM Viewer is a simple file and gallery viewer whose UI is modelled on popular FancyBox. </p>
 <p>Main features:</p>
 <ul>
@@ -12,17 +12,20 @@
 <li>Written using ES6 classes</li>
 <li>Works in all <em>modern browsers</em></li>
 </ul>
-<h2 id="getting-started">Getting started</h2>
-<p><a href="https://github.com/magicbruno/FM_Viewer/archive/refs/heads/main.zip">Download</a> or clone repository. Distribution files are in the <strong>dist</strong> folder.</p>
+<h2 id="12-getting-started">1.2. Getting started</h2>
+<p>Install via npm:</p>
+<pre><code>npm install @magicbruno/fm_viewer
+</code></pre>
+<p>If you prefer yuo can <a href="https://github.com/magicbruno/FM_Viewer/archive/refs/heads/main.zip">Download</a> <code>or</code> clone repository. Distribution files are in the <strong>dist</strong> folder.</p>
 <p>Link css stuff in the <code>head</code> of your page:</p>
 <pre><code>&lt;head&gt;
 ...
-    &lt;link rel=&quot;stylesheet&quot; href=&quot;assets/css/file-man.css&quot;&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;your-install-folder/dist/css/file-man.css&quot;&gt;
 ...
 &lt;/head&gt;
 </code></pre>
 <p>Link script file at the end of body section of the html page.</p>
-<pre><code>&lt;script src=&quot;assets/js/FM_Viewer.js&quot;&gt;&lt;/script&gt;
+<pre><code>&lt;script src=&quot;your-install-folder/dist/js/FM_Viewer.js&quot;&gt;&lt;/script&gt;
 </code></pre>
 <p>and then create an instance of the FM_Viewer class to initialize the viewer.</p>
 <pre><code>&lt;script&gt;
@@ -32,11 +35,19 @@
 &lt;/script&gt;
 </code></pre>
 <p>The <code>&lt;selector&gt;</code> parameter is the HTML element on which the viewer is built. </p>
-<h2 id="basic-usage">Basic usage</h2>
+<h2 id="13-basic-usage">1.3. Basic usage</h2>
 <p>If you create the viewer instance with no parameter, FM_Viewer will build its own element on the fly and append it to the <code>body</code> of the page.</p>
 <pre><code>const TheViewer = new FM_Viewer();
 </code></pre>
-<p>All <code>&lt;a&gt;</code> elements with data-fm-viewer attribute are registered by the viewer when the <code>DOMContentLoaded</code> event is fired, and then will open its href in the viewer.</p>
+<p>All <code>&lt;a&gt;</code> elements with <code>data-fmviewer</code> attribute are registered by the viewer when the <code>DOMContentLoaded</code> event is fired, and then they will open its href in the viewer.</p>
+<p>You can optionally specify the type of the document to show using <code>data-type</code> attribute. Valid types are: <code>image</code>, <code>video</code>, <code>audio</code> and <code>iframe</code>.</p>
+<blockquote>
+<h4 id="notes">NOTES</h4>
+<ul>
+<li>The viewer try to determine the type of the document linked to by file extension. If the url has no extension you must specify the type using <code>data-type</code> attribute.</li>
+<li>Use video type only for link to real video files. Form Vimeo or YouTube video use iframe type instead (see example).</li>
+</ul>
+</blockquote>
 <p>If you add links after, for example via ajax call, you may call the viewer refresh method to update the viewer.</p>
 <pre><code>TheViewer.refresh();
 </code></pre>
@@ -114,7 +125,7 @@
 &lt;/div&gt;
 </code></pre>
 <p>FM_Viewer has no dependance. No jQuery, no Bootstrap and icons are self contained svg graphics. You only need its style sheet.</p>
-<h2 id="customizing">Customizing</h2>
+<h2 id="14-customizing">1.4. Customizing</h2>
 <p>You can customize your FM_Viewer constructing your interface using HTML and modifying style sheet file.</p>
 <p>The example below expose only basic button (close viewer, next and previous) with customized icons and allows viewer closing on clicking on backdrop.</p>
 <pre><code>    &lt;div class=&quot;fm-viewer off-screen&quot; id=&quot;theViewer&quot; data-action=&quot;close-viewer&quot;&gt;

@@ -87,16 +87,20 @@
 class MB_File {
     constructor(url, type, gal, title) {
         this.Url = url;
-        this.Name = this.Url.substr(this.Url.lastIndexOf('/') + 1);
+        this.Name = this.Url.substring(this.Url.lastIndexOf('/') + 1);
+        let queryPos = this.Name.indexOf('?');
+        if (queryPos !== -1) { 
+            this.Name = this.Name.substring(0,queryPos);
+        }
         this.gallery = gal;
         this.title = title || '';
-        let extpos = this.Url.lastIndexOf('.');
+        let extpos = this.Name.lastIndexOf('.');
         let ext = '';
         if (extpos > -1) {
-            ext = this.Url.substr(extpos);
+            ext = this.Name.substring(extpos);
         }
         this.extension = ext;
-        this.directory = this.Url.substr(0, this.Url.lastIndexOf('/'));
+        this.directory = this.Url.substring(0, this.Url.lastIndexOf('/') + 1);
         if (this.supportPdf())
             this.filetypes.iframe = ['.pdf'];
 
@@ -229,7 +233,9 @@ class FM_Viewer {
                 if (this.btnFullScreenOff)
                     this.btnFullScreenOff.classList.add('d-none');
             }
-        })
+        });
+        this.vimeoRegex = /http(?:s?):\/\/vimeo.com\/(\d{9})/gi;
+        this.youtubeRegex = /http(?:s?):\/\/(?:www\.)?youtu(?:be\.com\/watch\?v=|\.be\/)([\w\-_]*)(&(amp;)?‌​[\w\?‌​=]*)?/gi;
     }
 
     element = null;             // viewer html element
@@ -248,6 +254,8 @@ class FM_Viewer {
     gallery = [];               // current files gallery
     galleryIndex = 0;           // current gallery index
 
+    vimeoRegex = null;
+    youtubeRegex = null;
     /**
      * set current file id
      * @param val id of the files
@@ -600,13 +608,13 @@ class FM_Viewer {
                         }).catch(error => reject(error));
                     break;
                 case 'video':
+                case 'audio':                    
                     this.showVideo(myFade)
                         .then(() => {
                             resolve(myFile);
                         }).catch(error => reject(error));
                     break;
-                case 'audio':
-                    break;
+
                 case 'iframe':
                     this.showIframe(myFade).then(() => {
                         resolve(myFile);
@@ -663,8 +671,10 @@ class FM_Viewer {
         return new Promise(resolve => {
             let frame = document.createElement('iframe');
             frame.classList.add('viewer-content');
+            frame.setAttribute('allowfullscreen', 'true');
+            frame.setAttribute('allow','accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
             frame.classList.add(myFade);
-            frame.src = myFile.Url;
+            frame.src = self.convertUrl(myFile.Url);
             self.element.appendChild(frame);
             self.element.classList.remove('loading');
             setTimeout(() => {
@@ -672,6 +682,19 @@ class FM_Viewer {
                 setTimeout(() => resolve(true), 400);
             }, 300);
         })
+    }
+
+    convertUrl(url) {
+        if (this.vimeoRegex.test(url)){
+            let vimeoId = url.replace(this.vimeoRegex, '$1');
+            return `https://player.vimeo.com/video/${vimeoId}`;
+        }
+
+        if(this.youtubeRegex.test(url)) {
+            let youtubeId = url.replace(this.youtubeRegex, '$1');
+            return `https://www.youtube.com/embed/${youtubeId}`;
+        }
+        return url;
     }
 
      /**
