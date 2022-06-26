@@ -22,9 +22,9 @@ npm install @magicbruno/fm_viewer
 ```
 or link directly from CDN:
 ```
-<link rel="stylesheet" href="[your-install-folder/dist/css/file-man.css](https://cdn.jsdelivr.net/npm/@magicbruno/fm_viewer/dist/css/file-man.min.css)">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@magicbruno/fm_viewer/dist/css/file-man.min.css">
 
-<script src="[your-install-folder/dist/js/FM_Viewer.js](https://cdn.jsdelivr.net/npm/@magicbruno/fm_viewer/dist/js/FM_Viewer.js)"></script>
+<script src="https://cdn.jsdelivr.net/npm/@magicbruno/fm_viewer/dist/js/FM_Viewer.js"></script>
 ```
 
 If you prefer yuo can [Download](https://github.com/magicbruno/FM_Viewer/archive/refs/heads/main.zip) `or` clone repository. Distribution files are in the **dist** folder.
@@ -34,7 +34,7 @@ Link css stuff in the `head` of your page:
 ```
 <head>
 ...
-    <link rel="stylesheet" href="your-install-folder/dist/css/file-man.css">
+    <link rel="stylesheet" href="..../file-man.css">
 ...
 </head>
 ```
@@ -42,7 +42,7 @@ Link css stuff in the `head` of your page:
 Link script file at the end of body section of the html page.
 
 ```
-<script src="your-install-folder/dist/js/FM_Viewer.js"></script>
+<script src="..../FM_Viewer.js"></script>
 ```
 and then create an instance of the FM_Viewer class to initialize the viewer.
 ```
@@ -152,9 +152,9 @@ Here is the code appended to the `body`.
 FM_Viewer has no dependance. No jQuery, no Bootstrap and icons are self contained svg graphics. You only need its style sheet.
 
 ## 1.4. Customizing 
-You can customize your FM_Viewer constructing your interface using HTML and modifying style sheet file.
+You can customize your FM_Viewer constructing your interface using HTML and modifying stylesheet file.
 
-The example below expose only basic button (close viewer, next and previous) with customized icons and allows viewer closing on clicking on backdrop.
+The example below expose only basic buttons (close viewer, next and previous) with customized icons and allows viewer closing on clicking on backdrop.
 
 ```
     <div class="fm-viewer off-screen" id="theViewer" data-action="close-viewer">
