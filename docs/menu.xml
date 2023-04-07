@@ -1,6 +1,12 @@
 <ul class="navbar-nav ms-auto mb-2 mb-md-0 justify-content-end">
     <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="index.html">Home</a>
+        <a class="nav-link" aria-current="page" href="index.html">
+            <img src="img/gb.svg" alt="English flag" style="height: 12px; vertical-align: baseline"> Home</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="index-it.html">
+            <img src="img/it.svg" alt="Bandiera italiana" style="height: 12px; vertical-align: baseline"> Home</a>
     </li>
     
     <li class="nav-item dropdown">

@@ -809,10 +809,13 @@ class FM_Viewer {
         if (!document.fullscreenElement) {
             elem.requestFullscreen()
                 .catch(err => {
-                    Swal.fire({
-                        icon: 'error',
-                        text: `Impossibile impostare la modalità "fullscreen": ${err.message} (${err.name})`
-                    });
+                    if(window.Swal)
+                        Swal.fire({
+                            icon: 'error',
+                            text: `Impossibile impostare la modalità "fullscreen": ${err.message} (${err.name})`
+                        });
+                    else
+                        console.error(`Impossibile impostare la modalità "fullscreen": ${err.message} (${err.name})`);
                 });
         } else {
             document.exitFullscreen();

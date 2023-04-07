@@ -1,61 +1,61 @@
 <h1 id="1-fm-viewer">1. FM Viewer</h1>
-<p>Simple javascript file viewer.</p>
-<p><a href="https://magicbruno.github.io/FM_Viewer/">Demo and documentation.</a></p>
-<h2 id="11-introduction">1.1. Introduction</h2>
-<p>FM Viewer is a simple file and gallery viewer whose UI is modelled on popular FancyBox javascript component. </p>
-<p>Main features:</p>
+<p>Semplice visualizzatore di file javascript.</p>
+<p><a href="https://magicbruno.github.io/FM_Viewer/">Demo e documentazione.</a></p>
+<h2 id="11-introduzione">1.1. introduzione</h2>
+<p>FM Viewer è un semplice visualizzatore di file e gallerie la cui interfaccia utente è modellata sulla popolare componente JavaScript FancyBox. </p>
+<p>Caratteristiche principali:</p>
 <ul>
-<li>Completely free and open source</li>
-<li>No dependencies</li>
-<li>Very light (js + css about 20 Kb minimized)</li>
-<li>Completely customizable</li>
-<li>Written using ES6 classes</li>
-<li>Works in all <em>modern browsers</em></li>
+<li>Completamente gratuito e open source</li>
+<li>Nessuna dipendenza</li>
+<li>Molto leggero (JS + CSS circa 20 kb <em>minimized</em>)</li>
+<li>Completamente personalizzabile</li>
+<li>Scritto usando le classi ES6</li>
+<li>Funziona in tutti i <em>modern browsers</em></li>
 </ul>
-<h2 id="12-getting-started">1.2. Getting started</h2>
-<p>Install via npm:</p>
+<h2 id="12-per-iniziare">1.2. Per iniziare</h2>
+<p>Installa Fm_viewer tramite NPM:</p>
 <pre><code>npm install @magicbruno/fm_viewer
 </code></pre>
-<p>or link directly from CDN:</p>
+<p>o collegalo direttamente da CDN:</p>
 <pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@magicbruno/fm_viewer@1.0.1/dist/css/file-man.min.css&quot;&gt;
 &lt;script src=&quot;https://cdn.jsdelivr.net/npm/@magicbruno/fm_viewer@1.0.1/FM_Viewer.min.js&quot;&gt;&lt;/script&gt;
 </code></pre>
-<p>If you prefer yuo can <a href="https://github.com/magicbruno/FM_Viewer/archive/refs/heads/main.zip">Download</a> <code>or</code> clone repository. Distribution files are in the <strong>dist</strong> folder.</p>
-<p>Link css stuff in the <code>head</code> of your page:</p>
+<p>Se preferisci puoi <a href="https://github.com/magicbruno/FM_Viewer/archive/refs/heads/main.zip">scaricarlo</a> o clonare il repository. I file si trovano nella cartella <strong>dist</strong>.</p>
+<p>Collega il foglio di stile nella <code>head</code> della tua pagina:</p>
 <pre><code>&lt;head&gt;
 ...
     &lt;link rel=&quot;stylesheet&quot; href=&quot;..../file-man.css&quot;&gt;
 ...
 &lt;/head&gt;
 </code></pre>
-<p>Link script file at the end of body section of the html page.</p>
+<p>Collega lo script alla fine del <code>body</code> della pagina HTML</p>
 <pre><code>&lt;script src=&quot;..../FM_Viewer.js&quot;&gt;&lt;/script&gt;
 </code></pre>
-<p>and then create an instance of the FM_Viewer class to initialize the viewer.</p>
+<p>e quindi crea un&#39;istanza della classe FM_Viewer per inizializzare il viewer.</p>
 <pre><code>&lt;script&gt;
     (function(win){
         win.TheViewer = new FM_Viewer(&lt;selector&gt;);
     })(window);
 &lt;/script&gt;
 </code></pre>
-<p>The <code>&lt;selector&gt;</code> parameter is the HTML element on which the viewer is built. </p>
-<h2 id="13-basic-usage">1.3. Basic usage</h2>
-<p>If you create the viewer instance with no parameter, FM_Viewer will build its own element on the fly and append it to the <code>body</code> of the page.</p>
+<p>Il parametro <code>&lt;selector&gt;</code> è l&#39;elemento HTML su cui è costruito il viewer. </p>
+<h2 id="13-uso-di-base">1.3. Uso di base</h2>
+<p>Se si crea l&#39;istanza del viewer senza parametri, FM_VIEWER costruirà l&#39;elemento html al volo e lo aggiungerà al <code>body</code> della pagina.</p>
 <pre><code>const TheViewer = new FM_Viewer();
 </code></pre>
-<p>All <code>&lt;a&gt;</code> elements with <code>data-fmviewer</code> attribute are registered to the viewer when the <code>DOMContentLoaded</code> event is fired. On click its links will opened in the viewer.</p>
-<p>You can optionally specify the type of the document to show using <code>data-type</code> attribute. Valid types are: <code>image</code>, <code>video</code>, <code>audio</code> and <code>iframe</code>.</p>
+<p>Tutti gli elementi <code>&lt;a&gt;</code> che hanno l&#39;attributo <code>data-fmviewer</code> vengono registrati dal viewer al caricamento del documento (evento <code>DomContentLoad</code>).  Quando cliccati il link a cui punta il loro <code>href</code> sarà aperto nel viewer.</p>
+<p>È possibile specificare il tipo di documento da mostrare utilizzando l&#39;attributo <code>data-type</code>. I tipi validi sono: <code>image</code>, <code>video</code>, <code>audio</code> e <code>iframe</code>.</p>
 <blockquote>
-<h4 id="notes">NOTES</h4>
+<h4 id="note">NOTE</h4>
 <ul>
-<li>The viewer try to determine the type of the document linked to by file extension. If the url has no extension you must specify the type using <code>data-type</code> attribute.</li>
-<li>Use <code>video</code> type only for link to real video files. For Vimeo or YouTube video use <code>iframe</code> type instead (see example).</li>
+<li>Il viewer prova a determinare il tipo di documento collegato dall&#39;estensione del file. Se il collegamento è un&#39;URL senza estensione, è necessario specificare il tipo utilizzando l&#39;attributo <code>data-type</code>.</li>
+<li>Utilizza il tipo <code>video</code> solo per i collegamenti a file video. Per video Vimeo o YouTube usa invece il tipo <code>iFrame</code> (vedi esempio).</li>
 </ul>
 </blockquote>
-<p>If you add links after document load, for example via ajax call, you may call the viewer refresh method to update the viewer and add new links to registered ones.</p>
+<p>Se si aggiungono elementi <code>&lt;a&gt;</code> dopo il caricamento del documento, ad esempio tramite chiamata Ajax, è possibile chiamare il metodo di aggiornamento del viewer per aggiungere i nuovi link ai link registrati.</p>
 <pre><code>TheViewer.refresh();
 </code></pre>
-<p>Here is the code appended to the <code>body</code> by default. You may provide your customized viewer instead and pass its selector to FM_viewer constructor.</p>
+<p>Ecco il codice aggiunto al <code>body</code> del documento per impostazione predefinita. È possibile fornire invece inserire nel <code>body</code> il tuo viewer personalizzato e passare il selettore al costruttore FM_Viewer().</p>
 <pre><code>&lt;div class=&quot;fm-viewer off-screen&quot; id=&quot;fm-828573602&quot;&gt;
     &lt;nav class=&quot;fm-navbar&quot; role=&quot;navigation&quot;&gt;
         &lt;h3 class=&quot;viewer-title&quot;&gt;&lt;/h3&gt;
@@ -128,10 +128,10 @@
     &lt;/nav&gt;
 &lt;/div&gt;
 </code></pre>
-<p>FM_Viewer has no dependance. No jQuery, nor Bootstrap and icons are self contained svg graphics. You only need its style sheet.</p>
-<h2 id="14-customizing">1.4. Customizing</h2>
-<p>You can customize your FM_Viewer constructing your interface using HTML and/or modifying stylesheet file.</p>
-<p>The example below expose only basic buttons (close viewer, next and previous) with customized icons and allows viewer closing on clicking on backdrop.</p>
+<p>FM Viewer non ha dipendenze. Non hai bisogno né di jQuery, né di Bootstrap e le icone sono SVG incorporati nel codice. Devi solo caricare il suo foglio di stile.</p>
+<h2 id="14-personalizzazione">1.4. Personalizzazione</h2>
+<p>È possibile personalizzare il tuo FM_Viewer che realizzando l&#39;interfaccia in HTML e/o modificando il foglio di stile.</p>
+<p>L&#39;esempio seguente espone solo i pulsanti di base (<code>close-viewer</code>, <code>next</code> e <code>previous</code>) con icone personalizzate e consente la chiusura del visualizzatore facendo clic sul backdrop.</p>
 <pre><code>    &lt;div class=&quot;fm-viewer off-screen&quot; id=&quot;theViewer&quot; data-action=&quot;close-viewer&quot;&gt;
         &lt;a href=&quot;javascript:;&quot; data-action=&quot;close-viewer&quot;&gt;
             &lt;svg id=&quot;a&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; viewBox=&quot;0 0 180 180&quot;&gt;
@@ -187,53 +187,53 @@
         &lt;footer&gt;&lt;div class=&quot;viewer-title d-none&quot;&gt;&lt;/div&gt;&lt;/footer&gt;
     &lt;/div&gt;
 </code></pre>
-<p>Elements functionality and button actions are defined through CSS classes and <code>data-</code> attributes:</p>
+<p>La funzionalità degli elementi e le azioni dei pulsanti sono definite tramite classi CSS e attributi <code>data-</code>:</p>
 <table>
 <thead>
 <tr>
-<th>Element (CSS selector)</th>
-<th>Type</th>
-<th>Functionality/Action</th>
+<th>Elemento (selettore CSS)</th>
+<th>Tipo</th>
+<th>Funzionalità/Azione</th>
 </tr>
 </thead>
 <tbody><tr>
 <td><code>.fm-viewer</code></td>
 <td>element</td>
-<td>Viewer container (mandatory). Add class <code>off-screen</code> if you want that the viewer is initially off screen.</td>
+<td>Container per il viewer (obbligatorio). Aggiungi la classe <code>off-screen</code> se desideri che lo spettatore sia inizialmente fuori schermo.</td>
 </tr>
 <tr>
 <td><code>.viewer-title</code></td>
 <td>element</td>
-<td>Title/caption obtained from <code>title</code> attribute of <code>&lt;a&gt;</code> element. Hidden if empty.</td>
+<td>Titolo/didascalia ottenuta dall&#39;attributo <code>title</code> dell&#39;elemento <code>&lt;a&gt;</code>. Nascosto se vuoto.</td>
 </tr>
 <tr>
 <td><code>[data-action=&quot;close-viewer&quot;]</code></td>
 <td>button or element</td>
-<td>Close the viewer. If added to viewer container itself allows closing viewer clicking the backdrop.</td>
+<td>Chiude il viewer. Se aggiunto al contenitore del viewer stesso consente di chiudere il viewer facendo clic sul backdrop.</td>
 </tr>
 <tr>
 <td><code>[data-action=&quot;download-file&quot;]</code></td>
 <td>button</td>
-<td>Starts file downloading. Available only for same domain files otherwise hidden.</td>
+<td>Avvia il download del file. Disponibile solo per i file provenienti dallo stesso dominio del viewer, altrimenti nascosto.</td>
 </tr>
 <tr>
 <td><code>[data-action=&quot;previous&quot;]</code></td>
 <td>button</td>
-<td>Shows previous file in gallery.</td>
+<td>Mostra il file precedente nella galleria.</td>
 </tr>
 <tr>
 <td><code>[data-action=&quot;next&quot;]</code></td>
 <td>button</td>
-<td>Shows next file in gallery.</td>
+<td>Mostra il file successivo nella galleria.</td>
 </tr>
 <tr>
 <td><code>[data-action=&quot;fullscreen-on&quot;]</code></td>
 <td>button</td>
-<td>Opens full screen view. Automatically hidden if fullscreen view is active.</td>
+<td>Apre la visualizzazione a schermo intero. Nascosto automaticamente se la visualizzazione a schermo intero è attiva.</td>
 </tr>
 <tr>
 <td><code>[data-action=&quot;fullscreen-off&quot;]</code></td>
 <td>button</td>
-<td>Closes full screen view. Automatically hidden if fullscreen view is not active.</td>
+<td>Chiude la visualizzazione a schermo intero. Nascosto automaticamente se la visualizzazione a schermo intero non è attiva.</td>
 </tr>
 </tbody></table>
