@@ -120,7 +120,7 @@ class MB_File {
     ext = "";
     gallery = "";
     filetypes = {
-        "image": ('.jpg,.jpeg,.svg,.gif,.png').split(','),
+        "image": ('.apng,.avif,.gif,.jpg,.jpeg,.jfif,.pjpeg,.pjp,.png,.svg,.webp').split(','),
         "video": ('.mov,.mpeg,.mp4').split(','),
         "audio": ('.mp3,.wav').split(',')
         //,"iframe": ['.pdf']
