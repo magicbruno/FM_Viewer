@@ -426,6 +426,46 @@ class FM_Viewer {
                     e.preventDefault();
                     self.show(fi);
                 })
+            } else {
+                const id = element.dataset.viewerId;
+                const gal = element.getAttribute('data-fmviewer') || "";
+                const url = element.href;
+                let type = element.getAttribute('data-type');
+                let title = element.getAttribute('title') || '';
+
+                for (let index = 0; index < this.files.length; index++) {
+                    const file = this.files[index];
+                    if (file.id == id) {
+                        file.Url = url;
+                        file.Name = file.Url.substring(file.Url.lastIndexOf('/') + 1);
+                        let queryPos = file.Name.indexOf('?');
+                        if (queryPos !== -1) { 
+                            file.Name = file.Name.substring(0,queryPos);
+                        }
+                        file.gallery = gal;
+                        file.title = title || '';
+                        let extpos = file.Name.lastIndexOf('.');
+                        let ext = '';
+                        if (extpos > -1) {
+                            ext = file.Name.substring(extpos);
+                        }
+                        file.extension = ext;
+                        file.directory = file.Url.substring(0, file.Url.lastIndexOf('/') + 1);
+                        if (file.supportPdf())
+                            file.filetypes.iframe = ['.pdf'];
+                
+                        if (type)
+                            file.Type = type;
+                        else {
+                            for (const prop in file.filetypes) {
+                                if (file.filetypes[prop].indexOf(file.extension) > -1)
+                                    file.Type = prop;
+                            }
+                        }
+                        break;
+                    }
+                }
+        
             }
 
         }
