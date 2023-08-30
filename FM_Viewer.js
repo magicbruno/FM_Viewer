@@ -8,7 +8,7 @@
             this.xDown = null;
             this.yDown = null;
 
-            this.options = options;
+            this.options = options || {};
 
             this.handleTouchStart = this.handleTouchStart.bind(this);
             this.handleTouchMove = this.handleTouchMove.bind(this);

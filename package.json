@@ -1,6 +1,6 @@
 {
   "name": "@magicbruno/fm_viewer",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "Simple web file viewer",
   "main": "FM_Viewer.js",
   "directories": {
