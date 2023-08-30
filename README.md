@@ -22,8 +22,8 @@ npm install @magicbruno/fm_viewer
 ```
 or link directly from CDN:
 ```
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@magicbruno/fm_viewer@1.0.1/dist/css/file-man.min.css">
-<script src="https://cdn.jsdelivr.net/npm/@magicbruno/fm_viewer@1.0.1/FM_Viewer.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@magicbruno/fm_viewer@1.0.7/dist/css/file-man.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@magicbruno/fm_viewer@1.0.7/FM_Viewer.min.js"></script>
 ```
 
 If you prefer yuo can [Download](https://github.com/magicbruno/FM_Viewer/archive/refs/heads/main.zip) `or` clone repository. Distribution files are in the **dist** folder.
