@@ -99,8 +99,9 @@
   align-items: center;
 }
 .fm-viewer.off-screen {
-  transform: scale(0.1);
+  transform: scale(0.01);
   opacity: 0;
+  pointer-events: none;
 }
 .fm-viewer .viewer-content {
   transition: all 0.4s;

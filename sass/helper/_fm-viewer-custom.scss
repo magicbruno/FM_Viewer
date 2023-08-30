@@ -19,8 +19,9 @@
     align-items: center;
 
     &.off-screen {
-        transform: scale(0.1);
+        transform: scale(0.01);
         opacity: 0;
+        pointer-events: none;
     }
 
     .viewer-content {
