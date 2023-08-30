@@ -19,19 +19,23 @@
         }
 
         onLeft() {
-            this.options.onLeft();
+            if (this.options.onLeft)
+                this.options.onLeft();
         }
 
         onRight() {
-            this.options.onRight();
+            if(this.options.onRight)
+                this.options.onRight();
         }
 
         onUp() {
-            this.options.onUp();
+            if(this.options.onUp)
+                this.options.onUp();
         }
 
         onDown() {
-            this.options.onDown();
+            if(this.options.onDown)
+                this.options.onDown();
         }
 
         static getTouches(evt) {
@@ -199,12 +203,7 @@ class FM_Viewer {
         }
         this.initButtons();
 
-        // Init swiper (if touch)
-        window.MBSwiper.options = {
-            onLeft: () => this.next(),
-            onRight: () => this.previous(),
-            onUp: () => this.hide()
-        };
+
 
         // Changing fullscreen state event
         this.element.addEventListener('fullscreenchange', event => {
@@ -547,6 +546,13 @@ class FM_Viewer {
      * @param {MB_File} fi 
      */
     show(fi) {
+        // Init swiper (if touch)
+        window.MBSwiper.options = {
+            onLeft: () => this.next(),
+            onRight: () => this.previous(),
+            onUp: () => this.hide()
+        };
+
         this.element.classList.remove('off-screen');
         this.gallery = [];
         var galItems = [];
@@ -575,6 +581,12 @@ class FM_Viewer {
             document.exitFullscreen();
         this.hideCurrentFile().then(esito => self.element.classList.add('off-screen'));
         this.currentFile = -1;
+                
+        window.MBSwiper.options = {
+            onLeft: null,
+            onRight: null,
+            onUp: null
+        };
     }
 
     /**
