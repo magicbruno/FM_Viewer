@@ -17,8 +17,8 @@
 <pre><code>npm install @magicbruno/fm_viewer
 </code></pre>
 <p>or link directly from CDN:</p>
-<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@magicbruno/fm_viewer@1.0.1/dist/css/file-man.min.css&quot;&gt;
-&lt;script src=&quot;https://cdn.jsdelivr.net/npm/@magicbruno/fm_viewer@1.0.1/FM_Viewer.min.js&quot;&gt;&lt;/script&gt;
+<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@magicbruno/fm_viewer@1.0.7/dist/css/file-man.min.css&quot;&gt;
+&lt;script src=&quot;https://cdn.jsdelivr.net/npm/@magicbruno/fm_viewer@1.0.7/FM_Viewer.min.js&quot;&gt;&lt;/script&gt;
 </code></pre>
 <p>If you prefer yuo can <a href="https://github.com/magicbruno/FM_Viewer/archive/refs/heads/main.zip">Download</a> <code>or</code> clone repository. Distribution files are in the <strong>dist</strong> folder.</p>
 <p>Link css stuff in the <code>head</code> of your page:</p>
