@@ -97,7 +97,15 @@ function creadist() {
   )
 }
 
-exports.default = series(sass,sasscompress,compressjs,createAutoInstall,creadist,documentation, documentation_it);
+exports.default = 
+  series(sass,
+    sasscompress,
+    compressjs,
+    createAutoInstall,
+    createESM,
+    creadist,
+    documentation, 
+    documentation_it);
 exports.sass = sass;
 exports.compressjs = compressjs;
 exports.sasscompress = sasscompress;
