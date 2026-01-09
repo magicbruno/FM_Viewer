@@ -84,7 +84,7 @@ function createESM() {
     rename('FM_Viewer.esm.min.js'),
     dest(jsDest),
     src(jsSrc),
-    footer(`export default FMViewer;`),
+    footer(`export default FM_Viewer;`),
     rename('FM_Viewer.esm.js'),
     dest(jsDest)
   );
