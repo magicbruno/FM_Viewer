@@ -876,4 +876,4 @@ class FM_Viewer {
 
 }
 
-export default FMViewer;
+export default FM_Viewer;
