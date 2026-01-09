@@ -79,7 +79,7 @@ function createAutoInstall() {
 function createESM() {
   return pipeline(
     src(jsSrc),
-    footer(`export default FMViewer;`),
+    footer(`export default FM_Viewer;`),
     uglify(),
     rename('FM_Viewer.esm.min.js'),
     dest(jsDest),
