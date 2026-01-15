@@ -220,9 +220,8 @@ Elements functionality and button actions are defined through CSS classes and `d
 |`[data-action="download-file"]`|button|Starts file downloading. Available only for same domain files otherwise hidden.|
 |`[data-action="previous"]`|button|Shows previous file in gallery.|
 |`[data-action="next"]`|button|Shows next file in gallery.|
-
-Now is aalse available the ESM version (v. 1.011).
 |`[data-action="fullscreen-on"]`|button|Opens full screen view. Automatically hidden if fullscreen view is active.|
 |`[data-action="fullscreen-off"]`|button|Closes full screen view. Automatically hidden if fullscreen view is not active.|
 
+Now is aalse available the ESM version (v. 1.011).
 
